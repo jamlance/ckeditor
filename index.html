@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Muthu - CK Editor</title>
+	<script src="./ckeditor.js"></script>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+    <div id="editor">
+        <h1>Hello Muthu!</h1>
+        <p>I'm an instance of Muthu - CK Editor.</p>
+    </div>
+    <script>        
+        if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
+            CKEDITOR.tools.enableHtml5Elements( document );
+        CKEDITOR.config.height = 150;
+        CKEDITOR.config.width = 'auto';
+        var initSample = ( function() {
+            var wysiwygareaAvailable = isWysiwygareaAvailable(),
+                isBBCodeBuiltIn = !!CKEDITOR.plugins.get('bbcode');
+            return function() {
+                var editorElement = CKEDITOR.document.getById( 'editor' );
+                if ( isBBCodeBuiltIn ) {
+                    editorElement.setHtml(
+                        'Hello Muthu!\n\n' +
+                        'I\'m an instance of Muthu - CK Editor.'
+                    );
+                }
+                if ( wysiwygareaAvailable ) {
+                    CKEDITOR.replace( 'editor' );
+                } else {
+                    editorElement.setAttribute( 'contenteditable', 'true' );
+                    CKEDITOR.inline( 'editor' );
+                }
+            };
+            function isWysiwygareaAvailable() {
+                if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {
+                    return true;
+                }
+                return !!CKEDITOR.plugins.get( 'wysiwygarea' );
+            }
+        } )();
+        initSample();
+    </script>
+
+</body>
+</html>
